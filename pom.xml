@@ -37,29 +37,34 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.13</version>
 
 				<executions>
 					<execution>
-						<id>docker-package</id>
+						<id>default</id>
 						<phase>package</phase>
 						<goals>
-							<goal>exec</goal>
+							<goal>build</goal>
+							<goal>push</goal>
 						</goals>
 						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>build</argument>
-								<argument>-t</argument>
-								<argument>spacewell-app</argument>
-								<argument>.</argument>
-							</arguments>
+							<repository>adrija1993/centosnew</repository>
+							<tag>${project.version}</tag>
+							<buildArgs>
+								<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+								</buildArgs>
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+				   <dependency>
+				      <groupId>javax.activation</groupId>
+					  <artifactId>javax.activation-api</artifactId>
+					  <version>1.2.0</version>
+				   </dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
